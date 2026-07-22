@@ -1,4 +1,5 @@
-const API_BASE = "https://your-codespace-name-8000.app.github.dev";document.getElementById("api-base-label").textContent = API_BASE;
+const API_BASE = "https://improved-space-funicular-69p4794x9w9gcrq9j-8000.app.github.dev/";
+document.getElementById("api-base-label").textContent = API_BASE;
 
 const statusEl = document.getElementById("conn-status");
 const logsBody = document.querySelector("#logs-table tbody");
