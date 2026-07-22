@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Firewall System — Dashboard</title>
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>🛡️ AI Firewall System</h1>
+    <div class="status" id="conn-status">connecting…</div>
+  </header>
+
+  <section class="stats-grid" id="stats-grid">
+    <div class="stat-card"><span class="stat-value" id="stat-total">–</span><span class="stat-label">Total Flows</span></div>
+    <div class="stat-card allow"><span class="stat-value" id="stat-allowed">–</span><span class="stat-label">Allowed</span></div>
+    <div class="stat-card block"><span class="stat-value" id="stat-blocked">–</span><span class="stat-label">Blocked</span></div>
+    <div class="stat-card warn"><span class="stat-value" id="stat-malicious">–</span><span class="stat-label">Malicious Detected</span></div>
+    <div class="stat-card"><span class="stat-value" id="stat-blocked-ips">–</span><span class="stat-label">IPs Blocklisted</span></div>
+  </section>
+
+  <section class="controls">
+    <button id="btn-simulate">Simulate 1 flow</button>
+    <button id="btn-simulate-batch">Simulate 15 flows</button>
+    <label class="auto-toggle">
+      <input type="checkbox" id="auto-refresh" checked /> Auto refresh (3s)
+    </label>
+  </section>
+
+  <section class="chart-wrap">
+    <canvas id="trafficChart" height="90"></canvas>
+  </section>
+
+  <main class="grid">
+    <div class="panel">
+      <h2>Live Traffic Log</h2>
+      <div class="table-scroll">
+        <table id="logs-table">
+          <thead>
+            <tr><th>Time</th><th>Src IP</th><th>Dst Port</th><th>Label</th><th>Confidence</th><th>Verdict</th><th>Reason</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Blocked IPs</h2>
+      <div class="table-scroll">
+        <table id="blocked-table">
+          <thead><tr><th>IP</th><th>Blocked At</th><th>Reason</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Firewall Rules</h2>
+      <form id="rule-form">
+        <select id="rule-type">
+          <option value="allow_ip">Allow IP</option>
+          <option value="deny_ip">Deny IP</option>
+          <option value="threshold">Block Threshold (0-1)</option>
+        </select>
+        <input id="rule-value" placeholder="e.g. 192.168.1.10 or 0.75" required />
+        <input id="rule-desc" placeholder="description (optional)" />
+        <button type="submit">Add / Update</button>
+      </form>
+      <div class="table-scroll">
+        <table id="rules-table">
+          <thead><tr><th>Type</th><th>Value</th><th>Description</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer>AI Firewall System — reference dashboard. Talks to backend at <code id="api-base-label"></code></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
